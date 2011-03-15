@@ -1,6 +1,7 @@
 = requestactor
 
-Description goes here.
+Requestactor is simple tool, which helps with defining actions on deeper levels, such as models.
+The project started for a simple reason. I wanted to use a different data set based on the server name in the request.
 
 == Note on Patches/Pull Requests
  
@@ -14,4 +15,4 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2011 Georg Fruhwald. See LICENSE for details.
+Copyright (c) 2011 Gyorgy Frivolt. See LICENSE for details.
