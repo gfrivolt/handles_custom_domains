@@ -5,13 +5,14 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "requestactor"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Simple tool for defining actions based on the incoming request.}
+    gem.description = %Q{Define strategies for handling requests coming from clients. Requestactor enables to act on requests on the model level.}
     gem.email = "fifigyuri@gmail.com"
     gem.homepage = "http://github.com/fifigyuri/requestactor"
-    gem.authors = ["Georg Fruhwald"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+    gem.authors = ["György Frivolt"]
+
+    gem.add_development_dependency "rspec", '~> 2.5.0'
+    gem.add_development_dependency "thoughtbot-shoulda", "~> 2.11.1"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
