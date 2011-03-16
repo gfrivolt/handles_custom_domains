@@ -11,4 +11,8 @@ describe DbDumpGenerator do
   it "generates a filled db dump from the template" do
     subject.generate_dump(:table_prefix => 'foo_').should == 'fill table prefix "foo_" here'
   end
+
+  it "searches template file under config by default"
+
+  it "can be told to take template file from a different location"
 end
