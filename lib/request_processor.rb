@@ -2,6 +2,10 @@ require 'ruby-debug'
 
 class RequestProcessor
 
+  class << self
+    attr_accessor :current_table_name_prefix
+  end
+
   def initialize
     self.server_name_mappings = Array.new
   end
@@ -24,5 +28,11 @@ class RequestProcessor
     server_name_mappings.each do |server_name_mapping|
       return server_name_mapping[:properties] if server_name_mapping[:server_name] =~ server_name
     end
+    nil
+  end
+
+  def process(request)
+    properties_for_server = match_server_name(request.server_name)
+    RequestProcessor.current_table_name_prefix = properties_for_server[:table_name_prefix] if properties_for_server
   end
 end

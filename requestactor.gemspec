@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["György Frivolt"]
-  s.date = %q{2011-03-16}
+  s.date = %q{2011-03-17}
   s.description = %q{Define strategies for handling requests coming from clients. Requestactor enables to act on requests on the model level.}
   s.email = %q{fifigyuri@gmail.com}
   s.extra_rdoc_files = [
@@ -18,13 +18,18 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".document",
+    ".rspec",
     "Gemfile",
     "LICENSE",
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "lib/db_dump_generator.rb",
+    "lib/request_processor.rb",
     "lib/requestactor.rb",
     "requestactor.gemspec",
+    "spec/db_dump_generator_spec.rb",
+    "spec/request_processor_spec.rb",
     "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/fifigyuri/requestactor}
@@ -32,23 +37,9 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.5.2}
   s.summary = %q{Simple tool for defining actions based on the incoming request.}
   s.test_files = [
+    "spec/db_dump_generator_spec.rb",
     "spec/request_processor_spec.rb",
-    "spec/spec_helper.rb",
-    "spec/test_app/app/controllers/application_controller.rb",
-    "spec/test_app/app/helpers/application_helper.rb",
-    "spec/test_app/config/application.rb",
-    "spec/test_app/config/boot.rb",
-    "spec/test_app/config/environment.rb",
-    "spec/test_app/config/environments/development.rb",
-    "spec/test_app/config/environments/production.rb",
-    "spec/test_app/config/environments/test.rb",
-    "spec/test_app/config/initializers/backtrace_silencers.rb",
-    "spec/test_app/config/initializers/inflections.rb",
-    "spec/test_app/config/initializers/mime_types.rb",
-    "spec/test_app/config/initializers/secret_token.rb",
-    "spec/test_app/config/initializers/session_store.rb",
-    "spec/test_app/config/routes.rb",
-    "spec/test_app/db/seeds.rb"
+    "spec/spec_helper.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -65,6 +56,17 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
       s.add_development_dependency(%q<rack>, [">= 0"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.5.0"])
+      s.add_development_dependency(%q<rspec-rails>, ["~> 2.5.0"])
+      s.add_development_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+      s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.5.0"])
+      s.add_development_dependency(%q<rspec-rails>, ["~> 2.5.0"])
+      s.add_development_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+      s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.5.0"])
+      s.add_development_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+      s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
     else
       s.add_dependency(%q<requestactor>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.5.0"])
@@ -75,6 +77,17 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rspec>, ["~> 2.5.0"])
       s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
       s.add_dependency(%q<rack>, [">= 0"])
+      s.add_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_dependency(%q<rspec>, ["~> 2.5.0"])
+      s.add_dependency(%q<rspec-rails>, ["~> 2.5.0"])
+      s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+      s.add_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_dependency(%q<rspec>, ["~> 2.5.0"])
+      s.add_dependency(%q<rspec-rails>, ["~> 2.5.0"])
+      s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+      s.add_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_dependency(%q<rspec>, ["~> 2.5.0"])
+      s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
       s.add_dependency(%q<ruby-debug19>, [">= 0"])
     end
   else
@@ -87,6 +100,17 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rspec>, ["~> 2.5.0"])
     s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
     s.add_dependency(%q<rack>, [">= 0"])
+    s.add_dependency(%q<ruby-debug19>, [">= 0"])
+    s.add_dependency(%q<rspec>, ["~> 2.5.0"])
+    s.add_dependency(%q<rspec-rails>, ["~> 2.5.0"])
+    s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+    s.add_dependency(%q<ruby-debug19>, [">= 0"])
+    s.add_dependency(%q<rspec>, ["~> 2.5.0"])
+    s.add_dependency(%q<rspec-rails>, ["~> 2.5.0"])
+    s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+    s.add_dependency(%q<ruby-debug19>, [">= 0"])
+    s.add_dependency(%q<rspec>, ["~> 2.5.0"])
+    s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
     s.add_dependency(%q<ruby-debug19>, [">= 0"])
   end
 end

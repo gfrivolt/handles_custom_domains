@@ -1,4 +1,10 @@
 #encoding: utf-8
+require 'rspec/core'
+require 'rspec/core/rake_task'
+
+RSpec::Core::RakeTask.new(:spec) do |spec|
+end
+#encoding: utf-8
 require 'rubygems'
 require 'rake'
 
