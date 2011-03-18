@@ -1,5 +1,3 @@
-require 'ruby-debug'
-
 class RequestProcessor
 
   class << self
