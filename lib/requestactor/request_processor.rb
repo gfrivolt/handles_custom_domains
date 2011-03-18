@@ -4,6 +4,10 @@ class RequestProcessor
 
   class << self
     attr_accessor :current_table_name_prefix
+
+    def clear!
+      self.current_table_name_prefix = nil
+    end
   end
 
   def initialize
@@ -32,6 +36,7 @@ class RequestProcessor
   end
 
   def process(request)
+    return if RequestProcessor.current_table_name_prefix
     properties_for_server = match_server_name(request.server_name)
     RequestProcessor.current_table_name_prefix = properties_for_server[:table_name_prefix] if properties_for_server
   end

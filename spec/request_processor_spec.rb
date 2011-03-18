@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'ruby-debug'
 
 describe RequestProcessor do
 
@@ -24,16 +23,30 @@ describe RequestProcessor do
     subject.match_server_name('dontknowthis').should be_nil
   end
 
-  it "catches server name from the browser request" do
-    request_mock = mock('browser request')
-    request_mock.should_receive(:server_name).once.and_return('www.bar.com')
-    subject.process(request_mock)
-    RequestProcessor.current_table_name_prefix.should == 'bar_'
-  end
-
   it "stores properties per thread" do
     RequestProcessor.current_table_name_prefix = nil
     Thread.new { RequestProcessor.current_table_name_prefix = 'foo_' }
     RequestProcessor.current_table_name_prefix.should be_nil
+  end
+
+  context "when receives request" do
+    before do
+      RequestProcessor.clear!
+      request_mock = mock('browser request')
+      request_mock.should_receive(:server_name).and_return('www.bar.com')
+      subject.process(request_mock)
+    end
+
+    it "can clear its processed state" do
+      RequestProcessor.current_table_name_prefix.should_not be_nil
+      RequestProcessor.clear!
+      RequestProcessor.current_table_name_prefix.should be_nil
+    end
+
+    it "catches server name from the browser request" do
+      RequestProcessor.current_table_name_prefix.should == 'bar_'
+    end
+    # it "processes request only once, if a request was processed before, does not make a change" do
+    # end
   end
 end
