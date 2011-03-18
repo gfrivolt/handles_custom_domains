@@ -24,8 +24,8 @@ require 'handles_custom_domains/request_processor'
 require 'handles_custom_domains/db_dump_generator'
 
 # Example handles_custom_domains Model:
-class Article < ActiveRecord::Base
-  handles_custom_domains
+class CustomDomain < ActiveRecord::Base
+  handles_custom_domains :app => 'example_app', :credentials => {:user => 'username@somewhere.com', :key => '123456'}
 end
 
 # Load Factories:
