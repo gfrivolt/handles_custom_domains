@@ -3,6 +3,8 @@
 Requestactor is simple tool, which helps with defining actions on deeper levels, such as models.
 The project started for a simple reason. I wanted to use a different data set based on the server name in the request.
 
+THIS PROJECT IS IN A VERY EMBRIOTIC STATE! UNLESS YOU MUST, DON'T USE IT!
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
