@@ -1,9 +1,69 @@
-= requestactor
+= handles_custom_domains
 
-Requestactor is simple tool, which helps with defining actions on deeper levels, such as models.
-The project started for a simple reason. I wanted to use a different data set based on the server name in the request.
+_handles_custom_domains_ helps acting on incoming requests. 
+If you need to use a different data set selected based on the server name in the request, than you might find this gem useful.
 
-THIS PROJECT IS IN A VERY EMBRIOTIC STATE! UNLESS YOU MUST, DON'T USE IT!
+It provides:
+* a simple way for defining an active model as a storage for domain names
+* binding to the custom domains add-on managed by heroku,
+* creations of data sets for existing applications
+
+THIS PROJECT IS IN A VERY EMBRIOTIC STATE YET! UNLESS YOU MUST, DON'T USE IT!
+
+== Define your custom domain handler model
+
+It is very simple to tell an ActiveRecord to store data about domains.
+
+   class CustomDomain << ActiveRecord::Base
+     handles_custom_domains :app => 'exampleapp', :credentials => {:user => 'username@somewhere.com', :key => '123456'}
+   end
+
+After that the _domain_name_ field of the active record will hold a domain names for the exampleapp on Heroku.
+The field name _domain_name_ is the default value, however, if you wish to change it, you can do so:
+
+  class CustomDomain << ActiveRecord::Base
+    handles_custom_domains :app => 'exampleapp', :credentials => {:user => 'username@somewhere.com', :key => '123456'}, :with_field => 'server_name'
+  end
+
+After calling the method every time when a record is being saved, the change of the field holding the domain name is checked.
+If its value changed than the change is also reflected on Heroku (the old domain name is removed the new is added).
+
+== Dataset selection
+
+The gem provides selection of datasets based on the addressed server name. The table set is distinguished by table name prefix.
+
+  class CustomDomain << ActiveRecord::Base
+    selects_dataset :using => :table_name_prefix
+  end
+
+At the moment table name prefix based selection is the only way how dataset can be selected.
+By default the table_prefix used is stored in the field _table_name_prefix_.
+This default can be changed by adding the _with_field_ attribute to the select_dataset method call.
+
+This method call results in handling the incoming requests. It finds the domain name based on the server name in the request.
+The table name prefix is selected based on the domain name.
+After that tables except of the one handling the domain names are prefixed by this prefix.
+
+There are few instance methods are added after calling the selects_dataset method:
+
+* _select_dataset_ forces to use the dataset defined by the record - it can be useful when there is no request (console, rake task).
+
+The value of _table_name_prefix_ can not be changed after the creation of the record. If it changes, the record is invalid.
+
+== Dataset creation
+
+New dataset might be necassary to create, when a new table name prefix is defined.
+
+  class CustomDomain << ActiveRecord::Base
+    after_insert :find_or_create_dataset
+
+    private
+
+    def find_or_create_dataset
+      <<create a new dataset with the new table name prefix, if the dataset is not already existing>>
+    end
+  end
+
 
 == Note on Patches/Pull Requests
  
