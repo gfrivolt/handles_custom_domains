@@ -11,11 +11,11 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "requestactor"
+    gem.name = "handles_custom_domains"
     gem.summary = %Q{Simple tool for defining actions based on the incoming request.}
-    gem.description = %Q{Define strategies for handling requests coming from clients. Requestactor enables to act on requests on the model level.}
+    gem.description = %Q{Define strategies for handling requests coming from clients. It enables to act on requests on the model level.}
     gem.email = "fifigyuri@gmail.com"
-    gem.homepage = "http://github.com/fifigyuri/requestactor"
+    gem.homepage = "http://github.com/fifigyuri/handles_custom_domains"
     gem.authors = ["György Frivolt"]
 
     gem.add_development_dependency "rspec", '~> 2.5.0'

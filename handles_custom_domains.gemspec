@@ -4,13 +4,13 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{requestactor}
+  s.name = %q{handles_custom_domains}
   s.version = "0.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["György Frivolt"]
-  s.date = %q{2011-03-18}
-  s.description = %q{Define strategies for handling requests coming from clients. Requestactor enables to act on requests on the model level.}
+  s.date = %q{2011-03-20}
+  s.description = %q{Define strategies for handling requests coming from clients. It enables to act on requests on the model level.}
   s.email = %q{fifigyuri@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -24,13 +24,21 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
-    "lib/requestactor.rb",
-    "lib/requestactor/db_dump_generator.rb",
-    "lib/requestactor/request_processor.rb",
+    "init.rb",
+    "lib/handles_custom_domains.rb",
+    "lib/handles_custom_domains/db_dump_generator.rb",
+    "lib/handles_custom_domains/railtie.rb",
+    "lib/handles_custom_domains/request_processor.rb",
     "requestactor.gemspec",
-    "spec/spec_helper.rb"
+    "spec/db/database.yml",
+    "spec/db/schema.rb",
+    "spec/factories/article.rb",
+    "spec/spec_helper.rb",
+    "spec/unit/db_dump_generator_spec.rb",
+    "spec/unit/handles_custom_domains_spec.rb",
+    "spec/unit/request_processor_spec.rb"
   ]
-  s.homepage = %q{http://github.com/fifigyuri/requestactor}
+  s.homepage = %q{http://github.com/fifigyuri/handles_custom_domains}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.5.2}
   s.summary = %q{Simple tool for defining actions based on the incoming request.}
@@ -39,7 +47,7 @@ Gem::Specification.new do |s|
     "spec/factories/article.rb",
     "spec/spec_helper.rb",
     "spec/unit/db_dump_generator_spec.rb",
-    "spec/unit/handles_domains_spec.rb",
+    "spec/unit/handles_custom_domains_spec.rb",
     "spec/unit/request_processor_spec.rb"
   ]
 
@@ -66,6 +74,11 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.5.0"])
+      s.add_development_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+      s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.5.0"])
+      s.add_development_dependency(%q<factory_girl>, [">= 0"])
+      s.add_development_dependency(%q<faker>, [">= 0"])
       s.add_development_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.5.0"])
@@ -100,6 +113,11 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<faker>, [">= 0"])
       s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
       s.add_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_dependency(%q<rspec>, ["~> 2.5.0"])
+      s.add_dependency(%q<factory_girl>, [">= 0"])
+      s.add_dependency(%q<faker>, [">= 0"])
+      s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+      s.add_dependency(%q<ruby-debug19>, [">= 0"])
     end
   else
     s.add_dependency(%q<requestactor>, [">= 0"])
@@ -121,6 +139,11 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
     s.add_dependency(%q<ruby-debug19>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.5.0"])
+    s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+    s.add_dependency(%q<ruby-debug19>, [">= 0"])
+    s.add_dependency(%q<rspec>, ["~> 2.5.0"])
+    s.add_dependency(%q<factory_girl>, [">= 0"])
+    s.add_dependency(%q<faker>, [">= 0"])
     s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
     s.add_dependency(%q<ruby-debug19>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.5.0"])
