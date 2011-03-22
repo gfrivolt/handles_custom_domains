@@ -37,7 +37,7 @@ The gem provides selection of datasets based on the addressed server name. The t
   end
 
 At the moment table name prefix based selection is the only way how dataset can be selected.
-By default the table_prefix used is stored in the field _table_name_prefix_.
+By default the table_prefix used is stored in the field _name_prefix_.
 This default can be changed by adding the _with_field_ attribute to the select_dataset method call.
 
 This method call results in handling the incoming requests. It finds the domain name based on the server name in the request.
@@ -48,7 +48,7 @@ There are few instance methods are added after calling the selects_dataset metho
 
 * _select_dataset_ forces to use the dataset defined by the record - it can be useful when there is no request (console, rake task).
 
-The value of _table_name_prefix_ can not be changed after the creation of the record. If it changes, the record is invalid.
+The value of _name_prefix_ can not be changed after the creation of the record. If it changes, the record is invalid.
 
 == Dataset creation
 
