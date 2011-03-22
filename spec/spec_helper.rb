@@ -5,6 +5,7 @@ require 'faker'
 require 'rails'
 require 'active_record'
 require 'active_support'
+require 'ruby-debug'
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
@@ -21,10 +22,12 @@ require File.dirname(__FILE__) + '/../init'
 # require 'requestactor'
 require 'handles_custom_domains'
 require 'handles_custom_domains/request_processor'
+require 'handles_custom_domains/selects_dataset'
 
 # Example handles_custom_domains Model:
 class CustomDomain < ActiveRecord::Base
   handles_custom_domains :app => 'example_app', :credentials => {:user => 'username@somewhere.com', :key => '123456'}
+  selects_dataset :by => :table_name__prefix
 end
 
 # Load Factories:

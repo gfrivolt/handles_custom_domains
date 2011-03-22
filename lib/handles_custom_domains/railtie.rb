@@ -1,3 +1,6 @@
+require 'handles_custom_domains'
+require 'handles_custom_domains/selects_dataset'
+
 module HandlesCustomDomains
   if defined?(Rails::Railtie)
     require "rails"
@@ -14,6 +17,7 @@ module HandlesCustomDomains
   class Railtie
     def self.insert
       ActiveRecord::Base.send(:include, HandlesCustomDomains)
+      ActiveRecord::Base.send(:include, SelectsDataset)
     end
   end
 end

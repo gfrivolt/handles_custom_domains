@@ -33,7 +33,7 @@ If its value changed than the change is also reflected on Heroku (the old domain
 The gem provides selection of datasets based on the addressed server name. The table set is distinguished by table name prefix.
 
   class CustomDomain << ActiveRecord::Base
-    selects_dataset :using => :table_name_prefix
+    selects_dataset :by => :table_name_prefix
   end
 
 At the moment table name prefix based selection is the only way how dataset can be selected.

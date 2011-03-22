@@ -1,6 +1,5 @@
 require 'heroku'
 require 'active_record'
-require 'ruby-debug'
 
 module HandlesCustomDomains
   def self.included(base)
