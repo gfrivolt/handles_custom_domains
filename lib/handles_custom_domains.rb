@@ -16,8 +16,15 @@ module HandlesCustomDomains
       validates_uniqueness_of :domain_name
       self.app = options[:app]
       self.credentials = options[:credentials]
-      after_save :update_custom_domains
-      after_destroy :remove_custom_domain
+
+      domain_name_memoize = nil
+      after_initialize { domain_name_memoize = domain_name }
+      after_save do
+        service_client.remove_domain(app, domain_name_memoize) if domain_name_memoize && domain_name_memoize != self.domain_name
+        service_client.add_domain(app, domain_name)
+        domain_name_memoize = domain_name
+      end
+      after_destroy { service_client.remove_domain(app, domain_name) }
     end
 
     def add_domain(domain_name)
@@ -41,16 +48,6 @@ module HandlesCustomDomains
 
     def service_client
       self.class.service_client
-    end
-
-    private
-
-    def update_custom_domains
-      service_client.add_domain(app, domain_name)
-    end
-
-    def remove_custom_domain
-      service_client.remove_domain(app, domain_name)
     end
   end
 end
