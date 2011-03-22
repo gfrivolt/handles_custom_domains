@@ -12,10 +12,6 @@ describe HandlesCustomDomains do
     CustomDomain.stub!(:service_client).and_return(heroku_client)
     CustomDomain.add_domain('newdomain.example.com')
   end
-
-  it "holds a list of known domains"
-
-  it "destroy domain on heroku"
 end
 
 describe CustomDomain do

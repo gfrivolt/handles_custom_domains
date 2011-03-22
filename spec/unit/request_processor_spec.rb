@@ -46,7 +46,5 @@ describe RequestProcessor do
     it "catches server name from the browser request" do
       RequestProcessor.current_table_name_prefix.should == 'bar_'
     end
-    # it "processes request only once, if a request was processed before, does not make a change" do
-    # end
   end
 end

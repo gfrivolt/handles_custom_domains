@@ -20,8 +20,7 @@ require File.dirname(__FILE__) + '/../init'
 
 # require 'requestactor'
 require 'handles_custom_domains'
-# require 'handles_custom_domains/request_processor'
-# require 'handles_custom_domains/db_dump_generator'
+require 'handles_custom_domains/request_processor'
 
 # Example handles_custom_domains Model:
 class CustomDomain < ActiveRecord::Base
