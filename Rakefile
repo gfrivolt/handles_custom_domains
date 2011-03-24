@@ -18,6 +18,7 @@ begin
     gem.homepage = "http://github.com/fifigyuri/handles_custom_domains"
     gem.authors = ["György Frivolt"]
 
+    gem.add_dependency "heroku", "~> 1.19.1"
     gem.add_development_dependency "rspec", '~> 2.5.0'
     gem.add_development_dependency "factory_girl"
     gem.add_development_dependency "faker"
