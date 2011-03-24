@@ -16,14 +16,29 @@ module HandlesCustomDomains
       self.app = options[:app]
       self.credentials = options[:credentials]
 
-      domain_name_memoize = nil
-      after_initialize { domain_name_memoize = domain_name }
-      after_save do
-        service_client.remove_domain(app, domain_name_memoize) if domain_name_memoize && domain_name_memoize != self.domain_name
-        service_client.add_domain(app, domain_name)
+      original_initialize = instance_method(:initialize)
+      define_method(:initialize) do |*args|
+        original = original_initialize.bind(self)
+        original.call(*args)
+
         domain_name_memoize = domain_name
+
+        ghost = class << self; self end
+        ghost.class_eval do
+          define_method(:save) do |*args|
+            service_client.remove_domain(app, domain_name_memoize) if domain_name_memoize && domain_name_memoize != self.domain_name
+            service_client.add_domain(app, domain_name)
+            domain_name_memoize = domain_name
+            super *args
+          end
+          original_destroy = instance_method(:destroy)
+          define_method(:destroy) do |*args|
+            service_client.remove_domain(app, domain_name)
+            super *args
+          end
+        end
       end
-      after_destroy { service_client.remove_domain(app, domain_name) }
+
     end
 
     def add_domain(domain_name)

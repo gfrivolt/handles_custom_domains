@@ -30,6 +30,14 @@ class CustomDomain < ActiveRecord::Base
   selects_dataset :by => :table_name__prefix
 end
 
+def mock_heroku_client_for(*args)
+  heroku_client = mock('heroku client')
+  args.each do |subject|
+    subject.stub!(:service_client).and_return(heroku_client)
+  end
+  heroku_client
+end
+
 # Load Factories:
 Dir[File.join(File.dirname(__FILE__), "factories/**/*.rb")].each {|f| require f}
 

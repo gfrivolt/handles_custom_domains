@@ -17,7 +17,7 @@ module HandlesCustomDomains
   class Railtie
     def self.insert
       ActiveRecord::Base.send(:include, HandlesCustomDomains)
-      ActiveRecord::Base.send(:include, SelectsDataset)
+      ActiveRecord::Base.send(:include, HandlesCustomDomains::SelectsDataset)
     end
   end
 end

@@ -17,8 +17,7 @@ end
 describe CustomDomain do
   before do
     CustomDomain.delete_all
-    @heroku_client = mock('heroku client')
-    subject.stub!(:service_client).and_return(@heroku_client)
+    @heroku_client = mock_heroku_client_for(subject)
     subject.domain_name = 'newdomain.example.com'
     @heroku_client.should_receive(:add_domain).once.with('example_app', 'newdomain.example.com')
     subject.save
@@ -38,6 +37,28 @@ describe CustomDomain do
     @heroku_client.should_receive(:add_domain).once.with('example_app', 'otherdomain.example.com')
     subject.domain_name = 'otherdomain.example.com'
     subject.save
+  end
+end
+
+describe CustomDomain do
+
+  before { CustomDomain.delete_all }
+
+  [:custom_domain1, :custom_domain2].each do |custom_domain_subject|
+    let custom_domain_subject do
+      custom_domain = CustomDomain.new
+      custom_domain.domain_name = "#{custom_domain_subject.to_s}.com"
+      custom_domain
+    end
+  end
+
+  it "creates a new domain record without deleting the previous domain from heroku" do
+    heroku_client = mock_heroku_client_for(custom_domain1, custom_domain2)
+    heroku_client.should_receive(:add_domain).once.with('example_app', 'custom_domain1.com')
+    heroku_client.should_receive(:add_domain).once.with('example_app', 'custom_domain2.com')
+    heroku_client.should_not_receive(:remove_domain)
+    custom_domain1.save
+    custom_domain2.save
   end
 end
 
