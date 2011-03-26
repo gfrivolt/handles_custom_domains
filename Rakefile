@@ -18,7 +18,10 @@ begin
     gem.homepage = "http://github.com/fifigyuri/handles_custom_domains"
     gem.authors = ["György Frivolt"]
 
+    gem.add_dependency "activerecord", '~> 3.0.5'
+    gem.add_dependency "activesupport", '~> 3.0.5'
     gem.add_dependency "heroku", "~> 1.19.1"
+    gem.add_development_dependency "sqlite3", '~> 1.3.3'
     gem.add_development_dependency "rspec", '~> 2.5.0'
     gem.add_development_dependency "factory_girl"
     gem.add_development_dependency "faker"
