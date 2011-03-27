@@ -1,6 +1,7 @@
 require 'active_record'
 
 module HandlesCustomDomains
+
   module SelectsDataset
     def self.included(base)
       base.extend ClassMethods
@@ -20,8 +21,9 @@ module HandlesCustomDomains
 
     module ClassMethods
       def selects_dataset(options = {})
-        return if self.included_modules.include?(HandlesCustomDomains::SelectsDataset::InstanceMethods)
-        include HandlesCustomDomains::SelectsDataset::InstanceMethods
+        return if self.included_modules.include?(SelectsDataset::InstanceMethods)
+        HandlesCustomDomains.was_called_on = self
+        include SelectsDataset::InstanceMethods
 
         klass = self
         ghost = class << self; self end

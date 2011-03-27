@@ -13,7 +13,18 @@ describe HandlesCustomDomains do
     CustomDomain.add_domain('newdomain.example.com')
   end
 
-  it 'prohibits to be applied on more classes'
+  it 'prohibits to be applied on more classes' do
+    lambda do
+      class OtherCustomDomain < ActiveRecord::Base
+        def table_name
+          'custom_domains'
+        end
+        handles_custom_domains :app => 'example_app', \
+          :credentials => {:user => 'username@somewhere.com', :key => '123456'}
+      end
+    end.should raise_error
+
+  end
 end
 
 describe CustomDomain do

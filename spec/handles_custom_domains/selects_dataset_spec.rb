@@ -44,6 +44,15 @@ describe HandlesCustomDomains::SelectsDataset do
     end
   end
 
-  it 'prohibits to be applied on more classes'
+  it 'prohibits to be applied on more classes' do
+    lambda do
+      class OtherCustomDomain < ActiveRecord::Base
+        def table_name
+          'custom_domains'
+        end
+        selects_dataset :by => :table_name_prefix
+      end
+    end.should raise_error
+  end
 end
 

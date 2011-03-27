@@ -2,6 +2,15 @@ require 'heroku'
 require 'active_record'
 
 module HandlesCustomDomains
+  class << self;
+    attr_reader :was_called_on
+    def was_called_on=(value)
+      return @was_called_on = value unless @was_called_on
+      raise Error.new('Can be applied on one model only!') \
+        if HandlesCustomDomains.was_called_on != value
+    end
+  end
+
   def self.included(base)
     base.extend ClassMethods
   end
@@ -11,6 +20,7 @@ module HandlesCustomDomains
 
     def handles_custom_domains(options = {})
       return if self.included_modules.include?(HandlesCustomDomains::InstanceMethods)
+      HandlesCustomDomains.was_called_on = self
       include HandlesCustomDomains::InstanceMethods
       validates_uniqueness_of :domain_name
       self.app = options[:app]
