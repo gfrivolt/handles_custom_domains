@@ -27,7 +27,10 @@ require 'handles_custom_domains/selects_dataset'
 # Example handles_custom_domains Model:
 class CustomDomain < ActiveRecord::Base
   handles_custom_domains :app => 'example_app', :credentials => {:user => 'username@somewhere.com', :key => '123456'}
-  selects_dataset :by => :table_name__prefix
+  selects_dataset :by => :table_name_prefix
+end
+
+class Article < ActiveRecord::Base
 end
 
 def mock_heroku_client_for(*args)

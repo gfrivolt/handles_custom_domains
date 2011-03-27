@@ -12,6 +12,8 @@ describe HandlesCustomDomains do
     CustomDomain.stub!(:service_client).and_return(heroku_client)
     CustomDomain.add_domain('newdomain.example.com')
   end
+
+  it 'prohibits to be applied on more classes'
 end
 
 describe CustomDomain do

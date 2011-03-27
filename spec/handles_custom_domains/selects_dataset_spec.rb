@@ -25,6 +25,19 @@ describe HandlesCustomDomains::SelectsDataset do
     CustomDomain.find_matching_domain_for(request).should == foo_domain
   end
 
-  it 'can enforce using a dataset'
+  describe 'when enforcing dataset' do
+    it 'returns table_name_prefix' do
+      request = mock('incoming request')
+      heroku_client = mock_heroku_client_for(foo_domain)
+      heroku_client.stub!(:add_domain)
+      foo_domain.save
+      foo_domain.select_as_dataset
+      Article.table_name_prefix.should == 'foo_'
+    end
+
+    it 'does not return table_name_prefix for the custom_domain model'
+  end
+
+  it 'prohibits to be applied on more classes'
 end
 

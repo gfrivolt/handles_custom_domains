@@ -16,6 +16,20 @@ module HandlesCustomDomains
       self.app = options[:app]
       self.credentials = options[:credentials]
 
+      extend_initialize
+    end
+
+    def add_domain(domain_name)
+      service_client.add_domain(app, domain_name)
+    end
+
+    def service_client
+      @service_client ||= Heroku::Client.new(credentials[:user], credentials[:key])
+    end
+
+    private
+
+    def extend_initialize
       original_initialize = instance_method(:initialize)
       define_method(:initialize) do |*args|
         original = original_initialize.bind(self)
@@ -38,15 +52,6 @@ module HandlesCustomDomains
           end
         end
       end
-
-    end
-
-    def add_domain(domain_name)
-      service_client.add_domain(app, domain_name)
-    end
-
-    def service_client
-      @service_client ||= Heroku::Client.new(credentials[:user], credentials[:key])
     end
   end
 
