@@ -26,6 +26,10 @@ describe HandlesCustomDomains::SelectsDataset do
   end
 
   describe 'when enforcing dataset' do
+    before :each do
+      CustomDomain.clear_dataset_selection!
+    end
+
     it 'returns table_name_prefix' do
       request = mock('incoming request')
       heroku_client = mock_heroku_client_for(foo_domain)
@@ -35,7 +39,9 @@ describe HandlesCustomDomains::SelectsDataset do
       Article.table_name_prefix.should == 'foo_'
     end
 
-    it 'does not return table_name_prefix for the custom_domain model'
+    it 'does not return table_name_prefix for the custom_domain model' do
+      CustomDomain.table_name_prefix.should == ''
+    end
   end
 
   it 'prohibits to be applied on more classes'
