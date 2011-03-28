@@ -39,11 +39,13 @@ module HandlesCustomDomains
         activerecord_ghost.class_eval do
           original_table_name_prefix = instance_method(:table_name_prefix)
           define_method(:table_name_prefix) do |*args|
-            return SelectsDataset.current_dataset.name_prefix \
-              if SelectsDataset.current_dataset unless self.name == klass.name
+            return SelectsDataset.current_dataset.name_prefix unless (self.name == klass.name) || !SelectsDataset.current_dataset
             original = original_table_name_prefix.bind(self)
             original.call(*args)
           end
+          # original_table_name = instance_method(:table_name)
+          #FIXME: the table_name should be computed only when the dataset changes
+          define_method(:table_name) { |*args| compute_table_name }
         end
 
         # actioncontroller_ghost = class << ActiveController::Base; self end

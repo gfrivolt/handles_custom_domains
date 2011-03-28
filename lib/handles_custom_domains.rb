@@ -50,7 +50,8 @@ module HandlesCustomDomains
         ghost = class << self; self end
         ghost.class_eval do
           define_method(:save) do |*args|
-            service_client.remove_domain(app, domain_name_memoize) if domain_name_memoize && domain_name_memoize != self.domain_name
+            service_client.remove_domain(app, domain_name_memoize) \
+              if domain_name_memoize && domain_name_memoize != self.domain_name
             service_client.add_domain(app, domain_name)
             domain_name_memoize = domain_name
             super *args

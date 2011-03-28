@@ -30,17 +30,56 @@ describe HandlesCustomDomains::SelectsDataset do
       CustomDomain.clear_dataset_selection!
     end
 
-    it 'returns table_name_prefix' do
-      request = mock('incoming request')
-      heroku_client = mock_heroku_client_for(foo_domain)
-      heroku_client.stub!(:add_domain)
-      foo_domain.save
-      foo_domain.select_as_dataset
-      Article.table_name_prefix.should == 'foo_'
+    context do
+      before :each do
+        heroku_client = mock_heroku_client_for(foo_domain)
+        heroku_client.stub!(:add_domain)
+        foo_domain.select_as_dataset
+      end
+
+      it 'returns table_name_prefix' do
+        Article.table_name_prefix.should == 'foo_'
+      end
+
+      it 'has correct table_name' do
+        Article.table_name.should == 'foo_articles'
+      end
+
+      it 'changes table_name after changing the dataset again' do
+        bar_domain.select_as_dataset
+        Article.table_name.should == 'bar_articles'
+      end
+
+      it 'does not return table_name_prefix for the custom_domain model' do
+        CustomDomain.table_name_prefix.should == ''
+      end
+
     end
 
-    it 'does not return table_name_prefix for the custom_domain model' do
-      CustomDomain.table_name_prefix.should == ''
+    context 'for switching between two datasets' do
+      before :each do
+        ActiveRecord::Base.stub!(:table_name).and_return('foo_articles')
+        # foo_domain.select_as_dataset
+        # 2.times do
+        #   article = Article.new
+        #   article.save
+        # end
+        2.times { Factory.create(:article) }
+        ActiveRecord::Base.stub!(:table_name).and_return('bar_articles')
+        # bar_domain.select_as_dataset
+        # 3.times do
+        #   article = Article.new
+        #   article.save
+        # end
+        3.times { Factory.create(:article) }
+      end
+
+      # it 'works with the right dataset after selection' do
+      #   foo_domain.select_as_dataset
+      #   Article.count.should == 2
+      #   bar_domain.select_as_dataset
+      #   Article.count.should == 3
+      # end
     end
   end
 
