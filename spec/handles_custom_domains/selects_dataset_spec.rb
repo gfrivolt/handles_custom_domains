@@ -37,6 +37,11 @@ describe HandlesCustomDomains::SelectsDataset do
         foo_domain.select_as_dataset
       end
 
+      it 'does not select the same dataset twice' do
+        HandlesCustomDomains::SelectsDataset.should_not_receive(:current_dataset=)
+        foo_domain.select_as_dataset
+      end
+
       it 'returns table_name_prefix' do
         Article.table_name_prefix.should == 'foo_'
       end
