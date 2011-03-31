@@ -41,13 +41,15 @@ describe HandlesCustomDomains::SelectsDataset do
         Article.table_name_prefix.should == 'foo_'
       end
 
-      it 'has correct table_name' do
+      it 'has correct table_name and quoted_table_name' do
         Article.table_name.should == 'foo_articles'
+        Article.quoted_table_name.should == "\"foo_articles\""
       end
 
-      it 'changes table_name after changing the dataset again' do
+      it 'changes table_name and quoted_table_name after changing the dataset again' do
         bar_domain.select_as_dataset
         Article.table_name.should == 'bar_articles'
+        Article.quoted_table_name.should == "\"bar_articles\""
       end
 
       it 'does not return table_name_prefix for the custom_domain model' do
@@ -58,20 +60,20 @@ describe HandlesCustomDomains::SelectsDataset do
 
     context 'for switching between two datasets' do
       before :each do
-        ActiveRecord::Base.stub!(:table_name).and_return('foo_articles')
-        # foo_domain.select_as_dataset
-        # 2.times do
-        #   article = Article.new
-        #   article.save
-        # end
-        2.times { Factory.create(:article) }
-        ActiveRecord::Base.stub!(:table_name).and_return('bar_articles')
-        # bar_domain.select_as_dataset
-        # 3.times do
-        #   article = Article.new
-        #   article.save
-        # end
-        3.times { Factory.create(:article) }
+        # ActiveRecord::Base.stub!(:table_name).and_return('foo_articles')
+        foo_domain.select_as_dataset
+        2.times do
+          article = Article.new
+          article.save
+        end
+        # 2.times { Factory.create(:article) }
+        # ActiveRecord::Base.stub!(:table_name).and_return('bar_articles')
+        bar_domain.select_as_dataset
+        3.times do
+          article = Article.new
+          article.save
+        end
+        # 3.times { Factory.create(:article) }
       end
 
       # it 'works with the right dataset after selection' do
