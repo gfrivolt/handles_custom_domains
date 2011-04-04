@@ -21,7 +21,6 @@ require File.dirname(__FILE__) + '/../init'
 
 # require 'requestactor'
 require 'handles_custom_domains'
-require 'handles_custom_domains/request_processor'
 require 'handles_custom_domains/selects_dataset'
 
 # Example handles_custom_domains Model:

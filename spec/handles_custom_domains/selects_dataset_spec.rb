@@ -81,12 +81,12 @@ describe HandlesCustomDomains::SelectsDataset do
         # 3.times { Factory.create(:article) }
       end
 
-      # it 'works with the right dataset after selection' do
-      #   foo_domain.select_as_dataset
-      #   Article.count.should == 2
-      #   bar_domain.select_as_dataset
-      #   Article.count.should == 3
-      # end
+      it 'works with the right dataset after selection' do
+        foo_domain.select_as_dataset
+        Article.count.should == 2
+        bar_domain.select_as_dataset
+        Article.count.should == 3
+      end
     end
   end
 

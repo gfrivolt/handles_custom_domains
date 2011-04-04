@@ -56,7 +56,7 @@ module HandlesCustomDomains
       def select_as_dataset
         unless SelectsDataset.current_dataset == self
           SelectsDataset.current_dataset = self
-          ActiveRecord::Base.descendants.each { |klass| klass.reset_table_name }
+          ActiveRecord::Base.descendants.each { |klass| klass.reset_table_name; klass.reset_column_information }
         end
       end
     end
