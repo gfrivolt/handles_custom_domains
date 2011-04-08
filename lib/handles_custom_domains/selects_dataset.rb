@@ -44,19 +44,62 @@ module HandlesCustomDomains
             original.call(*args)
           end
         end
-
-        # actioncontroller_ghost = class << ActiveController::Base; self end
-        # ActiveController::Base.before_filter do
-        #   Thread.current[:stored_request] = request
-        # end
       end
+    end
+
+    module SharedMethods
+
+      class << self
+        attr_accessor :cached_attr
+
+        CACHED_CLASS_VARIABLES = [:column_names, :columns, :columns_hash, :content_columns, :dynamic_methods_hash,
+                                  :inheritance_column, :arel_engine, :relation, :arel_table, :table_name, :quoted_table_name]
+
+        def cache_state_for(klass)
+          current_dataset = SelectsDataset.current_dataset
+          klass_cached_attr = cached_attr[klass][current_dataset]
+          CACHED_CLASS_VARIABLES.each do |var_name|
+            klass_cached_attr[var_name] = klass.instance_variable_get("@#{var_name}")
+          end
+        end
+
+        def restore_state_for(klass)
+          current_dataset = SelectsDataset.current_dataset
+          klass_cached_attr = cached_attr[klass][current_dataset]
+          if klass_cached_attr.empty?
+            klass.reset_table_name
+            klass.reset_column_information
+          else
+            CACHED_CLASS_VARIABLES.each do |var_name|
+              klass.instance_variable_set("@#{var_name}", klass_cached_attr[var_name])
+            end
+          end
+        end
+
+        def clear_cache
+          self.cached_attr = Hash.new do |klass_hash, klass|
+            klass_hash[klass] = Hash.new do |dataset_hash, dataset|
+              dataset_hash[dataset] = {}
+            end
+          end
+        end
+      end
+
+      self.clear_cache
     end
 
     module InstanceMethods
       def select_as_dataset
         unless SelectsDataset.current_dataset == self
-          SelectsDataset.current_dataset = self
-          ActiveRecord::Base.descendants.each { |klass| klass.reset_table_name; klass.reset_column_information }
+          current_dataset = SelectsDataset.current_dataset
+          selected_dataset = self
+          ActiveRecord::Base.descendants.each do |klass|
+            unless klass <= HandlesCustomDomains.was_called_on
+              SharedMethods.cache_state_for(klass)
+              SelectsDataset.current_dataset = selected_dataset
+              SharedMethods.restore_state_for(klass)
+            end
+          end
         end
       end
     end

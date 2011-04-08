@@ -3,6 +3,7 @@ require 'spec_helper'
 describe HandlesCustomDomains::SelectsDataset do
 
   before do
+    HandlesCustomDomains::SelectsDataset::SharedMethods.clear_cache
     CustomDomain.delete_all
   end
 
@@ -65,20 +66,10 @@ describe HandlesCustomDomains::SelectsDataset do
 
     context 'for switching between two datasets' do
       before :each do
-        # ActiveRecord::Base.stub!(:table_name).and_return('foo_articles')
         foo_domain.select_as_dataset
-        2.times do
-          article = Article.new
-          article.save
-        end
-        # 2.times { Factory.create(:article) }
-        # ActiveRecord::Base.stub!(:table_name).and_return('bar_articles')
+        2.times { Factory.create(:article) }
         bar_domain.select_as_dataset
-        3.times do
-          article = Article.new
-          article.save
-        end
-        # 3.times { Factory.create(:article) }
+        3.times { Factory.create(:article) }
       end
 
       it 'works with the right dataset after selection' do
@@ -86,6 +77,14 @@ describe HandlesCustomDomains::SelectsDataset do
         Article.count.should == 2
         bar_domain.select_as_dataset
         Article.count.should == 3
+      end
+
+      it 'caches database related data and does not recreate table representations after the switches' do
+        Arel::Table.should_not_receive(:new).should_not_receive(:engine)
+        foo_domain.select_as_dataset
+        Article.count
+        bar_domain.select_as_dataset
+        Article.count
       end
     end
   end
@@ -100,5 +99,32 @@ describe HandlesCustomDomains::SelectsDataset do
       end
     end.should raise_error
   end
-end
 
+  describe 'SharedMethods' do
+    subject { HandlesCustomDomains::SelectsDataset::SharedMethods }
+
+    it "creates space for new klasses and datasets" do
+      subject.cached_attr[Article][foo_domain][:relation] = 5
+      subject.cached_attr[Article][foo_domain][:relation].should == 5
+    end
+
+    context 'when dataset is selected' do 
+      before do
+        foo_domain.select_as_dataset
+        Article.count
+        subject.cache_state_for(Article)
+      end
+
+      it "stores selected instance variables" do
+        subject.cached_attr[Article][foo_domain].should have_key :column_names
+        subject.cached_attr[Article][foo_domain][:column_names].should == ["id", "title", "body"]
+      end
+
+      it "restores selected instance variables for the current dataset" do
+        Article.class_eval { @column_names = nil }
+        subject.restore_state_for(Article)
+        subject.cached_attr[Article][foo_domain][:column_names].should == ["id", "title", "body"]
+      end
+    end
+  end
+end
