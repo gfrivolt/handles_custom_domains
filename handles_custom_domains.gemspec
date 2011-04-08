@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["György Frivolt"]
-  s.date = %q{2011-03-26}
+  s.date = %q{2011-04-08}
   s.description = %q{Define strategies for handling requests coming from clients. It enables to act on requests on the model level.}
   s.email = %q{fifigyuri@gmail.com}
   s.extra_rdoc_files = [
@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
     "README.rdoc"
   ]
   s.files = [
+    ".autotest",
     ".document",
     ".rspec",
     "Gemfile",
@@ -28,15 +29,13 @@ Gem::Specification.new do |s|
     "init.rb",
     "lib/handles_custom_domains.rb",
     "lib/handles_custom_domains/railtie.rb",
-    "lib/handles_custom_domains/request_processor.rb",
     "lib/handles_custom_domains/selects_dataset.rb",
     "spec/db/database.yml",
     "spec/db/schema.rb",
     "spec/factories/article.rb",
-    "spec/spec_helper.rb",
-    "spec/unit/handles_custom_domains_spec.rb",
-    "spec/unit/request_processor_spec.rb",
-    "spec/unit/selects_dataset_spec.rb"
+    "spec/handles_custom_domains/selects_dataset_spec.rb",
+    "spec/handles_custom_domains_spec.rb",
+    "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/fifigyuri/handles_custom_domains}
   s.require_paths = ["lib"]
@@ -45,10 +44,9 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/db/schema.rb",
     "spec/factories/article.rb",
-    "spec/spec_helper.rb",
-    "spec/unit/handles_custom_domains_spec.rb",
-    "spec/unit/request_processor_spec.rb",
-    "spec/unit/selects_dataset_spec.rb"
+    "spec/handles_custom_domains/selects_dataset_spec.rb",
+    "spec/handles_custom_domains_spec.rb",
+    "spec/spec_helper.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -101,6 +99,12 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<faker>, [">= 0"])
       s.add_development_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_development_dependency(%q<sqlite3>, ["~> 1.3.3"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.5.0"])
+      s.add_development_dependency(%q<factory_girl>, [">= 0"])
+      s.add_development_dependency(%q<faker>, [">= 0"])
+      s.add_development_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+      s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
       s.add_runtime_dependency(%q<activerecord>, ["~> 3.0.5"])
       s.add_runtime_dependency(%q<activesupport>, ["~> 3.0.5"])
       s.add_runtime_dependency(%q<heroku>, ["~> 1.19.1"])
@@ -109,6 +113,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<factory_girl>, [">= 0"])
       s.add_development_dependency(%q<faker>, [">= 0"])
       s.add_development_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+      s.add_development_dependency(%q<database_cleaner>, ["~> 0.6.6"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
     else
       s.add_dependency(%q<handles_custom_domains>, [">= 0"])
@@ -157,6 +162,12 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<faker>, [">= 0"])
       s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
       s.add_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_dependency(%q<sqlite3>, ["~> 1.3.3"])
+      s.add_dependency(%q<rspec>, ["~> 2.5.0"])
+      s.add_dependency(%q<factory_girl>, [">= 0"])
+      s.add_dependency(%q<faker>, [">= 0"])
+      s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+      s.add_dependency(%q<ruby-debug19>, [">= 0"])
       s.add_dependency(%q<activerecord>, ["~> 3.0.5"])
       s.add_dependency(%q<activesupport>, ["~> 3.0.5"])
       s.add_dependency(%q<heroku>, ["~> 1.19.1"])
@@ -165,6 +176,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<factory_girl>, [">= 0"])
       s.add_dependency(%q<faker>, [">= 0"])
       s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+      s.add_dependency(%q<database_cleaner>, ["~> 0.6.6"])
       s.add_dependency(%q<ruby-debug19>, [">= 0"])
     end
   else
@@ -214,6 +226,12 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<faker>, [">= 0"])
     s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
     s.add_dependency(%q<ruby-debug19>, [">= 0"])
+    s.add_dependency(%q<sqlite3>, ["~> 1.3.3"])
+    s.add_dependency(%q<rspec>, ["~> 2.5.0"])
+    s.add_dependency(%q<factory_girl>, [">= 0"])
+    s.add_dependency(%q<faker>, [">= 0"])
+    s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+    s.add_dependency(%q<ruby-debug19>, [">= 0"])
     s.add_dependency(%q<activerecord>, ["~> 3.0.5"])
     s.add_dependency(%q<activesupport>, ["~> 3.0.5"])
     s.add_dependency(%q<heroku>, ["~> 1.19.1"])
@@ -222,6 +240,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<factory_girl>, [">= 0"])
     s.add_dependency(%q<faker>, [">= 0"])
     s.add_dependency(%q<thoughtbot-shoulda>, ["~> 2.11.1"])
+    s.add_dependency(%q<database_cleaner>, ["~> 0.6.6"])
     s.add_dependency(%q<ruby-debug19>, [">= 0"])
   end
 end

@@ -3,8 +3,8 @@ require 'spec_helper'
 describe HandlesCustomDomains::SelectsDataset do
 
   before do
+    DatabaseCleaner.clean
     HandlesCustomDomains::SelectsDataset::SharedMethods.clear_cache
-    CustomDomain.delete_all
   end
 
   [:foo, :bar].each do |domain_name|

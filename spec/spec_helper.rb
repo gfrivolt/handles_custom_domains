@@ -5,7 +5,10 @@ require 'faker'
 require 'rails'
 require 'active_record'
 require 'active_support'
+require 'database_cleaner'
 require 'ruby-debug'
+
+DatabaseCleaner.strategy = :truncation
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))

@@ -26,6 +26,7 @@ begin
     gem.add_development_dependency "factory_girl"
     gem.add_development_dependency "faker"
     gem.add_development_dependency "thoughtbot-shoulda", "~> 2.11.1"
+    gem.add_development_dependency "database_cleaner", "~> 0.6.6"
     gem.add_development_dependency "ruby-debug19"
   end
   Jeweler::GemcutterTasks.new
